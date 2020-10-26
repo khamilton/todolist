@@ -1,7 +1,50 @@
-import logo from './logo.svg';
+import React, {Component} from 'react'
+//import logo from './logo.svg';
+import Header from './components/Header'
+import TodoList from './components/TodoList'
+import SubmitForm from './components/SubmitForm'
 import './App.css';
 
-function App() {
+class App extends Component {
+  state = {
+    header: 'My Todo List',
+    tasks: ['task 1', 'task 2', 'task 3', 'task 4', 'task 5' ]
+  }
+
+  handleDelete = (index) => {
+    const newArr = [...this.state.tasks]
+    newArr.splice(index, 1)
+    this.setState({tasks: newArr})
+  }
+
+  handleSubmit = task => {
+    this.setState({
+      tasks: [...this.state.tasks, task]
+    })
+  }
+
+  render() {
+    return (
+      <div className="wrapper">
+        <div className="card frame">
+          <Header numTodos={this.state.tasks.length} />
+          <TodoList
+            tasks={this.state.tasks}
+            onDelete={this.handleDelete}
+          />
+          <SubmitForm onFormSubmit={this.handleSubmit} />
+          {/* <h2>{this.state.header}</h2> */}
+        </div>
+      </div>
+    )
+  }
+}
+
+export default App;
+
+
+// eslint-disable-next-line
+{/* function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -20,6 +63,4 @@ function App() {
       </header>
     </div>
   );
-}
-
-export default App;
+*/}
